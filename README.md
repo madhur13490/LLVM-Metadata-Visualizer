@@ -16,6 +16,8 @@ Metadata node emitted in IR file usually refers to other metadata nodes and this
 * Next, use the standard `dot` program to get a .png file like     
 `dot <DOT-filename> -Tpng -o <PNG-filename>`
 
+if you think you have the right setup, go ahead and fire `make example` to experience quickly.
+
 # Example
 The following C code 
 
@@ -30,7 +32,7 @@ void foo() {
   X = Y;
 }
 ```
-when compiled to LLVM IR will look like
+when compiled to LLVM IR with `-g` will look like 
 
 ```llvm
 ; ModuleID = 'a.cpp'
@@ -68,4 +70,4 @@ This tool will give you the following picture.
 ![Image description](https://user-images.githubusercontent.com/4083456/33067905-a0085b78-ced5-11e7-8295-f1fef3648c0f.png)
 
 
-* You can invoke `example` target in makefile and experience quickly.
+
