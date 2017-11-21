@@ -7,12 +7,12 @@ using namespace std;
 
 bool isSupported(string s)
 {
-    if (s.find("DILocation") != string::npos      || \
-        s.find("DILexicalBlock") != string::npos  || \
-        s.find("DILocalVariable") != string::npos || \
-        s.find("DIBasicType") != string::npos     || \
+    if (s.find("DILocation") != string::npos          || \
+        s.find("DILexicalBlock") != string::npos      || \
+        s.find("DILocalVariable") != string::npos     || \
+        s.find("DIBasicType") != string::npos         || \
         s.find("DICompositeType") != string::npos     || \
-        s.find("DIDerivedType") != string::npos     || \
+        s.find("DIDerivedType") != string::npos       || \
         s.find("DISubprogram") != string::npos) return true;
     else return false;
 }
@@ -21,12 +21,12 @@ string emitHTMLTitle(string sourceNode, string s)
 {
     assert(isSupported(s));
 
-    std::regex e(R"(([a-zA-Z0-9_! ]+)[(]{1}(.+)[)]{1})");
-    std::regex comma(R"((\w+)[:]{1}([a-zA-Z0-9!""_ ]+))");
+    std::regex attributes(R"(([a-zA-Z0-9_! ]+)[(]{1}(.+)[)]{1})");
+    std::regex split(R"((\w+)[:]{1}([a-zA-Z0-9!""_ ]+))");
     std::sregex_iterator end;
     string tableString = "<TABLE>", tableTitle="";
 
-    std::sregex_iterator iter1(s.begin(), s.end(), e);
+    std::sregex_iterator iter1(s.begin(), s.end(), attributes);
     while(iter1 != end)
     {
         if (iter1->size() > 1) {
@@ -35,7 +35,7 @@ string emitHTMLTitle(string sourceNode, string s)
             tableString += "<TR><TD>" + sourceNode + "</TD>" + "<TD>" + tableTitle + "</TD></TR>";
 
             std::string dest = (*iter1)[2];
-            std::sregex_iterator iter2(dest.begin(), dest.end(), comma);
+            std::sregex_iterator iter2(dest.begin(), dest.end(), split);
             while (iter2 != end) {
                 if (iter2->size() > 1) {
                    tableString += "<TR>";
@@ -45,8 +45,7 @@ string emitHTMLTitle(string sourceNode, string s)
                 }      
                 ++iter2;
             }
-        }  
-
+        }
         ++iter1;
     }
     tableString += "</TABLE>";
@@ -63,12 +62,12 @@ int main(int argc, char** argv)
     int number = 0;
   
     if (argc < 3) {
-        cout << "Please enter all arguments. Syntax is \"filename.out IRfileName.ll DotFile.dot\"" << endl;
+        cout << "You seemed to miss an argument. Syntax is \"filename.out IRfileName.ll DotFile.dot\"" << endl;
         exit(0);
     }
  
     if (!infile) {
-        cout << "File not found\n";
+        cout << "File not found.\n";
         exit(1);
     } else {
         outfile << "graph IRGraph {\n";
@@ -89,12 +88,13 @@ int main(int argc, char** argv)
             } else { 
                 outfile << strippedLine << " [label=<" << line << "<BR/>>]" << endl;
             }
-            std::regex e1(R"(!\d+)");
-            std::sregex_iterator iter1(sub.begin(), sub.end(), e1);
+        
+            // regex to get pointees.
+            std::regex vertices(R"(!\d+)");
+            std::sregex_iterator iter1(sub.begin(), sub.end(), vertices);
 
             while(iter1 != end) {
                 for(unsigned i = 0; i < iter1->size(); ++i) {
-                   // std::cout << "the " << i + 1 << "th match" << ": " << (*iter1)[i] << std::endl;
                     string dest = (*iter1)[i]; 
                     outfile << sourceNode << " -- " << dest.erase(0, 1) << ";" << endl;
                 }
