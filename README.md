@@ -63,3 +63,6 @@ declare void @_ZNSt8ios_base4InitD1Ev(%"class.std::ios_base::Init"*) #1
 
 ```
 (The IR is truncated for demonstration purpose)
+
+This tool will give you the following picture.
+![Image description](https://user-images.githubusercontent.com/4083456/33067905-a0085b78-ced5-11e7-8295-f1fef3648c0f.png)
