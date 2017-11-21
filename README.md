@@ -6,7 +6,7 @@ Metadata node emitted in IR file usually refers to other metadata nodes and this
 
 # Pre-requisites
 * It has just one make file so Linux! (or Windows if you can run makefile with cygwin or so)
-* GCC 7.2 (for improved regex support)
+* GCC 7.2/Clang 5 (for improved regex support)
 * `dot` program (to get a .png file)
 
 # How to use the tool?
