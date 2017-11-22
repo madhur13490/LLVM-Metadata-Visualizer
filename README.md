@@ -10,13 +10,14 @@ Metadata node emitted in IR file usually refers to other metadata nodes and this
 * `dot` program (to get a .png file)
 
 # How to use the tool?
-* `make all` will give you an executable called `visualizer`
+* `make all` will give you an executable called `visualizer` in `bin/`
 * Invoke it as   
-`./visualizer <IR-filename> <DOT-filename>`
+`bin/visualizer <IR-filename> <DOT-filename>`
 * Next, use the standard `dot` program to get a .png file like     
 `dot <DOT-filename> -Tpng -o <PNG-filename>`
 
 if you think you have the right setup, go ahead and fire `make example` to experience quickly.
+Image file will be present in `images` folder.
 
 # Example
 The following C code 
